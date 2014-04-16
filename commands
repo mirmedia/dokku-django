@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
+
+if [[ $1 == django:* ]]; then
+
+  if [[ -z $2 ]]; then
+    echo "You must specify an app name"
+    exit 1
+  else
+    APP="$2"
+
+    if [[ ! -d "$DOKKU_ROOT/$APP" ]]; then
+      echo "$APP does not exist."
+      exit 1
+    fi
+
+  fi
+fi
+
+case "$1" in
+  django:collect)
+    echo "-----> Collecting Django Static Files."
+    dokku run "$APP" python manage.py collectstatic
+    ;;
+  help)
+    cat && cat<<EOF
+    django:collect <app>                            Collects the static files for <app>.
+EOF
+    ;;
+
+esac
