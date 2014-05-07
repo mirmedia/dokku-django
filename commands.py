@@ -31,13 +31,22 @@ def add_locations(config, additional):
 
 if __name__ == "__main__":
     args = parse_args()
+
     config_path = os.path.join(args.root, "nginx.conf")
     additional_path = os.path.join(args.root, "nginx_additional")
+
+    if not os.path.isfile(additional_path):
+        with open(additional_path, 'w') as f:
+            f.write('server { }')
+
     config = load(open(config_path))
     additional = load(open(additional_path))
+
     if args.folder:
         additional = serve_folder(additional, args.persistent, args.folder)
         dump(additional, open(additional_path, 'w'))
+
     if args.reload:
         config = add_locations(config, additional)
         dump(config, open(config_path, 'w'))
+

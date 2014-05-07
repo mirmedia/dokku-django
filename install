@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 
+apt-get install python-pip
 pip install pyparsing==2.0.2
