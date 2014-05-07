@@ -22,9 +22,20 @@ case "$1" in
     echo "-----> Collecting Django Static Files."
     dokku run "$APP" python manage.py collectstatic
     ;;
+  django:serve)
+    if [[ -z $3 ]]; then
+      echo "You must specify a Folder to serve."
+      exit 1
+    else
+      echo "-----> Preparing nginx config."
+      commmands.py -r "$DOKKU_ROOT/$APP" --reload --persistent-root "$DOKKU_ROOT/$APP/persistent" --serve $3
+      dokku persistent:create "$APP" $3
+    fi
+    ;;
   help)
     cat && cat<<EOF
     django:collect <app>                            Collects the static files for <app>.
+    django:serve <app> <folder>                     Serves the files in <folder> with nginx for <app>.
 EOF
     ;;
 

@@ -40,4 +40,4 @@ if __name__ == "__main__":
         dump(additional, open(additional_path, 'w'))
     if args.reload:
         config = add_locations(config, additional)
-        print(dumps(config))
+        dump(config, open(config_path, 'w'))
