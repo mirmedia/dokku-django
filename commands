@@ -33,16 +33,16 @@ case "$1" in
     fi
     ;;
   django:init)
-    dokku postgresql:start
+    DJANGO_SECRET=$(openssl rand -base64 32|base64)
     dokku postgresql:create "$APP"
     dokku django:serve "$APP" "static"
     dokku django:serve "$APP" "media"
-    dokku config:set "$APP" DJANGO_SETTINGS_MODULE=web.settings_cloud DJANGO_DEBUG=False DJANGO_SECRET_KEY=sUpErDuPerSeCrEtKeY
-  ;;
+    dokku config:set "$APP" DJANGO_SETTINGS_MODULE=web.settings_cloud DJANGO_DEBUG=False DJANGO_SECRET_KEY=$DJANGO_SECRET
+    ;;
   django)
     shift 2
     dokku run "$APP" python manage.py $@
-  ;;
+    ;;
   help)
     cat && cat<<EOF
     django:collect <app>                            Collects the static files for <app>.
