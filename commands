@@ -22,6 +22,14 @@ case "$1" in
     echo "-----> Collecting Django Static Files."
     dokku run "$APP" python manage.py collectstatic
     ;;
+  django:syncdb)
+    echo "-----> Syncing database."
+    dokku run "$APP" python manage.py syncdb
+    ;;
+  django:rebuild_index)
+    echo "-----> Rebuilding full-text indexes."
+    dokku run "$APP" python manage.py rebuild_index
+    ;;
   django:serve)
     if [[ -z $3 ]]; then
       echo "You must specify a Folder to serve."
