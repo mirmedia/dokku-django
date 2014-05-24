@@ -53,6 +53,8 @@ case "$1" in
     ;;
   help)
     cat && cat<<EOF
+    django:syncdb <app>                             Runs the syncdb command for <app>.
+    django:rebuild_index <app>                      Runs the rebuild_index command for <app>.
     django:collect <app>                            Collects the static files for <app>.
     django:serve <app> <folder>                     Serves the files in <folder> with nginx for <app>.
 EOF
