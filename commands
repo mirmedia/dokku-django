@@ -57,6 +57,7 @@ case "$1" in
     django:rebuild_index <app>                      Runs the rebuild_index command for <app>.
     django:collect <app>                            Collects the static files for <app>.
     django:serve <app> <folder>                     Serves the files in <folder> with nginx for <app>.
+    django <app> <command>                          Executes django manage commands for the Project.
 EOF
     ;;
 
